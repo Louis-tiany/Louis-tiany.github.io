@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Even - A super concise theme for Hugo</title>
+    <title>Posts on louis&#39;s blog</title>
     <link>https://louis-tiany.github.io/post/</link>
-    <description>Recent content in Posts on Even - A super concise theme for Hugo</description>
+    <description>Recent content in Posts on louis&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sat, 22 Feb 2020 18:08:43 +0800</lastBuildDate>
@@ -21,12 +21,12 @@
     </item>
     
     <item>
-      <title>First</title>
+      <title>博客初开~</title>
       <link>https://louis-tiany.github.io/post/first-post/</link>
       <pubDate>Sat, 22 Feb 2020 17:54:04 +0800</pubDate>
       
       <guid>https://louis-tiany.github.io/post/first-post/</guid>
-      <description></description>
+      <description>很久之前就有现过搭建自己的博客，但是总是怕写作水平、技术太差而迟迟没有行动起来。在寒假看到了很多搭建博客的视频，又有些心动。 因为自己在生活中</description>
     </item>
     
   </channel>
