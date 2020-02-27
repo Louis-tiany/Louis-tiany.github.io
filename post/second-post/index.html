@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Second Post - louis&#39;s blog</title>
+  <title>朝花夕拾-二叉树 - louis&#39;s blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="louis_tian" /><meta name="description" content="第二篇提交 git init git clone hugo new site blog hugo new post/first.md hugo server" /><meta name="keywords" content="Hugo, theme, even" />
+<meta name="author" content="louis_tian" /><meta name="description" content="二叉树由于非线性，是一种稍稍复杂的数据结构。在本科学习数据结构时基本上时一头雾水，对于二叉树的很多知识都没有理解，考完试以后很快就忘掉了。在" /><meta name="keywords" content="Hugo, theme, even" />
 
 
 
@@ -38,23 +38,23 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="Second Post" />
-<meta property="og:description" content="第二篇提交 git init git clone hugo new site blog hugo new post/first.md hugo server" />
+<meta property="og:title" content="朝花夕拾-二叉树" />
+<meta property="og:description" content="二叉树由于非线性，是一种稍稍复杂的数据结构。在本科学习数据结构时基本上时一头雾水，对于二叉树的很多知识都没有理解，考完试以后很快就忘掉了。在" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://louis-tiany.github.io/post/second-post/" />
 <meta property="article:published_time" content="2020-02-22T18:08:43+08:00" />
 <meta property="article:modified_time" content="2020-02-22T18:08:43+08:00" />
-<meta itemprop="name" content="Second Post">
-<meta itemprop="description" content="第二篇提交 git init git clone hugo new site blog hugo new post/first.md hugo server">
+<meta itemprop="name" content="朝花夕拾-二叉树">
+<meta itemprop="description" content="二叉树由于非线性，是一种稍稍复杂的数据结构。在本科学习数据结构时基本上时一头雾水，对于二叉树的很多知识都没有理解，考完试以后很快就忘掉了。在">
 <meta itemprop="datePublished" content="2020-02-22T18:08:43&#43;08:00" />
 <meta itemprop="dateModified" content="2020-02-22T18:08:43&#43;08:00" />
-<meta itemprop="wordCount" content="18">
+<meta itemprop="wordCount" content="1415">
 
 
 
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Second Post"/>
-<meta name="twitter:description" content="第二篇提交 git init git clone hugo new site blog hugo new post/first.md hugo server"/>
+<meta name="twitter:title" content="朝花夕拾-二叉树"/>
+<meta name="twitter:description" content="二叉树由于非线性，是一种稍稍复杂的数据结构。在本科学习数据结构时基本上时一头雾水，对于二叉树的很多知识都没有理解，考完试以后很快就忘掉了。在"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -121,7 +121,7 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Second Post</h1>
+      <h1 class="post-title">朝花夕拾-二叉树</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2020-02-22 </span>
@@ -133,18 +133,460 @@
     <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
-    <nav id="TableOfContents"></nav>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#二叉树基础算法">二叉树基础算法</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
   </div>
 </div>
     <div class="post-content">
-      <h1 id="第二篇提交">第二篇提交</h1>
+      <blockquote>
+<p>二叉树由于非线性，是一种稍稍复杂的数据结构。在本科学习数据结构时基本上时一头雾水，对于二叉树的很多知识都没有理解，考完试以后很快就忘掉了。在后面写代码做题时意识到了数据结构的重要性，于是重新温习，将二叉树的一些常见算法敲一遍。</p>
+</blockquote>
+<h2 id="二叉树基础算法">二叉树基础算法</h2>
+<p>本次实验环境为Clion+WSL+GCC；用于测试的树如图</p>
+<!-- raw HTML omitted -->
+<p><img src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/2009/06/tree12.gif" alt="二叉树"></p>
+<!-- raw HTML omitted -->
+<h4 id="1-二叉树链式存储结构">1. 二叉树链式存储结构</h4>
+<p>首先定义一个二叉树结点的结构体</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="c1">//定义节点
+</span><span class="c1"></span><span class="k">struct</span> <span class="nc">TreeNode</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">data</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">TreeNode</span> <span class="o">*</span><span class="n">left</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">TreeNode</span> <span class="o">*</span><span class="n">right</span><span class="p">;</span>
+    <span class="c1">//结构体构造函数
+</span><span class="c1"></span>    <span class="n">TreeNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">data</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">;</span>
+        <span class="k">this</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">=</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">=</span><span class="k">nullptr</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-二叉树递归遍历先序中序后序">2. 二叉树递归遍历（先序、中序、后序）</h4>
+<p>二叉树的递归遍历是比较容易实现的，主要是要理解层层递归的过程，递归的方法在之后解决问题会经常用到。</p>
 <ul>
-<li>git init</li>
-<li>git clone</li>
-<li>hugo new site blog</li>
-<li>hugo new post/first.md</li>
-<li>hugo server</li>
+<li>先序遍历</li>
 </ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">void</span> <span class="nf">preOrder</span><span class="p">(</span><span class="n">TreeNode</span> <span class="o">*</span><span class="n">root</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">root</span> <span class="o">==</span><span class="k">nullptr</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">&lt;&lt;</span><span class="s">&#34;  &#34;</span><span class="p">;</span>
+    <span class="c1">//对左子树和右子树进行递归
+</span><span class="c1"></span>    <span class="n">preOrder</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+    <span class="n">preOrder</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>中序遍历</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">void</span> <span class="nf">midOrder</span><span class="p">(</span><span class="n">TreeNode</span> <span class="o">*</span><span class="n">root</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">root</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="n">midOrder</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">&lt;&lt;</span><span class="s">&#34;  &#34;</span><span class="p">;</span>
+    <span class="n">midOrder</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>-后序遍历</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">void</span> <span class="nf">postOrder</span><span class="p">(</span><span class="n">TreeNode</span><span class="o">*</span> <span class="n">root</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">root</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="n">postOrder</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+    <span class="n">postOrder</span><span class="p">((</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">));</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">&lt;&lt;</span><span class="s">&#34;  &#34;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>递归的代码都比较简洁，主要是弄懂递归的方法。主函数中构造了一个简单的树来进行测试。完整的代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">;</span>
+
+<span class="c1">//定义节点
+</span><span class="c1"></span><span class="k">struct</span> <span class="nc">TreeNode</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">data</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">TreeNode</span> <span class="o">*</span><span class="n">left</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">TreeNode</span> <span class="o">*</span><span class="n">right</span><span class="p">;</span>
+    <span class="c1">//结构体构造函数
+</span><span class="c1"></span>    <span class="n">TreeNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">data</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">;</span>
+        <span class="k">this</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">=</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">=</span><span class="k">nullptr</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">preOrder</span><span class="p">(</span><span class="n">TreeNode</span> <span class="o">*</span><span class="n">root</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">root</span> <span class="o">==</span><span class="k">nullptr</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">&lt;&lt;</span><span class="s">&#34;  &#34;</span><span class="p">;</span>
+    <span class="c1">//对左子树和右子树进行递归
+</span><span class="c1"></span>    <span class="n">preOrder</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+    <span class="n">preOrder</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">midOrder</span><span class="p">(</span><span class="n">TreeNode</span> <span class="o">*</span><span class="n">root</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">root</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="n">midOrder</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">&lt;&lt;</span><span class="s">&#34;  &#34;</span><span class="p">;</span>
+    <span class="n">midOrder</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">postOrder</span><span class="p">(</span><span class="n">TreeNode</span><span class="o">*</span> <span class="n">root</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">root</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="n">postOrder</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+    <span class="n">postOrder</span><span class="p">((</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">));</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">&lt;&lt;</span><span class="s">&#34;  &#34;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//测试数据
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="nc">TreeNode</span> <span class="o">*</span><span class="n">root</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+    <span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+    <span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+    <span class="n">preOrder</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">midOrder</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">postOrder</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="二叉树遍历非递归实现">二叉树遍历非递归实现</h4>
+<p>虽然递归版本代码简洁容易实现，但是当树的深度比较深时会比较容易发生栈溢出。因此可以自己定义栈或者队列来实现二叉树的遍历。</p>
+<ul>
+<li>先序遍历非递归实现
+主要的算法流程</li>
+</ul>
+<blockquote>
+<p>建立一个空栈，将根节点压栈
+进行以下循环直至栈空</p>
+<blockquote>
+<ul>
+<li>
+<ol>
+<li>弹出栈顶元素</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>将弹出元素的右子树入栈</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>弹出元素左子树入栈</li>
+</ol>
+</li>
+</ul>
+</blockquote>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">void</span> <span class="nf">preOrderWithStack</span><span class="p">(</span><span class="n">TreeNode</span> <span class="o">*</span><span class="n">root</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">stack</span><span class="o">&lt;</span><span class="n">TreeNode</span><span class="o">*</span> <span class="o">&gt;</span> <span class="n">s</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">root</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="n">s</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+    <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">s</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="n">TreeNode</span> <span class="o">*</span><span class="n">current</span><span class="o">=</span><span class="n">s</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+        <span class="n">s</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">&lt;&lt;</span><span class="s">&#34;  &#34;</span><span class="p">;</span>
+        <span class="c1">//root节点右孩子先入栈
+</span><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">)</span>
+            <span class="n">s</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">)</span>
+            <span class="n">s</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>中序遍历是二叉树中使用比较多的遍历方法。下面是非递归形式的中序遍历方法。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">void</span> <span class="nf">midOrderWithStack</span><span class="p">(</span><span class="n">TreeNode</span> <span class="o">*</span><span class="n">root</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">stack</span><span class="o">&lt;</span><span class="n">TreeNode</span> <span class="o">*&gt;</span> <span class="n">s</span><span class="p">;</span>
+    <span class="n">TreeNode</span> <span class="o">*</span><span class="n">current</span><span class="o">=</span><span class="n">root</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">current</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">||</span> <span class="n">s</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">current</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span>
+        <span class="p">{</span>   <span class="c1">//左子树节点入栈
+</span><span class="c1"></span>            <span class="n">s</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">current</span><span class="p">);</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+        <span class="n">s</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">&lt;&lt;</span><span class="s">&#34;  &#34;</span><span class="p">;</span>
+        <span class="n">current</span><span class="o">=</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到相对于递归形式是稍微复杂一些。下面来分析一下整个过程。</p>
+<p>从整体上看，首先是定义了一个栈，然后有一个大的 <code>while</code> 循环，在这个大循环里还套有一个小循环。整棵树的遍历在这个大循环中完成。在第一次进行小循环时，树的所有左侧结点都会入栈，在这个例 子中，也就是 <code>1 2 4</code>，由于 <code>4</code> 节点没有左右孩子，因此打印该节点的值，依次向上去查找。</p>
+<ul>
+<li>后序遍历
+后续遍历相对来说会麻烦一点。需要用到两个栈来实现。完整的算法流程如下：</li>
+</ul>
+<blockquote>
+<ol>
+<li>将root节点压入第一个栈</li>
+<li>进行循环直到第一个栈空</li>
+</ol>
+<blockquote>
+<ul>
+<li>从第一个栈中弹出栈顶节点，压入第二个栈。</li>
+<li>将上一步弹出的那个节点的左孩子和右孩子压入第一个栈</li>
+</ul>
+</blockquote>
+<ol start="3">
+<li>从第二个栈中打印节点</li>
+</ol>
+</blockquote>
+<p>整体算法不算复杂。第一个栈中的存储树节点的顺序称为树的逆后续遍历，通过栈的特性将逆后续遍历在逆一次，就是后序遍历了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">void</span> <span class="nf">postOrderWithStack</span><span class="p">(</span><span class="n">TreeNode</span> <span class="o">*</span><span class="n">root</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">root</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">stack</span><span class="o">&lt;</span><span class="n">TreeNode</span><span class="o">*</span> <span class="o">&gt;</span> <span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">;</span>
+    <span class="n">s1</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+    <span class="n">TreeNode</span> <span class="o">*</span><span class="n">current</span><span class="o">=</span><span class="n">root</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">s1</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="n">current</span><span class="o">=</span><span class="n">s1</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+        <span class="n">s1</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+        <span class="n">s2</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">current</span><span class="p">);</span>
+        <span class="c1">//将原来的栈顶节点的左右孩子入栈,要先判断是否为空，否则会访问越界，引发段错误。
+</span><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span>
+            <span class="n">s1</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span>
+            <span class="n">s1</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">s2</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="n">current</span><span class="o">=</span><span class="n">s2</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+        <span class="n">s2</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">&lt;&lt;</span><span class="s">&#34;  &#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="总结">总结</h4>
+<p>二叉树的遍历是比较基础的算法，在后面做算法题和解决实际问题时会经常用到。所以需要熟练掌握递归和非递归地遍历二叉树，之后才能学习更加复杂地数据结构。</p>
 
     </div>
 

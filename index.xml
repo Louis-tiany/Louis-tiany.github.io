@@ -24,12 +24,12 @@ jsklfjsf It makes use of a variety of open source projects including:
     </item>
     
     <item>
-      <title>Second Post</title>
+      <title>朝花夕拾-二叉树</title>
       <link>https://louis-tiany.github.io/post/second-post/</link>
       <pubDate>Sat, 22 Feb 2020 18:08:43 +0800</pubDate>
       
       <guid>https://louis-tiany.github.io/post/second-post/</guid>
-      <description>第二篇提交 git init git clone hugo new site blog hugo new post/first.md hugo server</description>
+      <description>二叉树由于非线性，是一种稍稍复杂的数据结构。在本科学习数据结构时基本上时一头雾水，对于二叉树的很多知识都没有理解，考完试以后很快就忘掉了。在</description>
     </item>
     
     <item>
