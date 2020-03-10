@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>易混淆的C语言指针 - louis&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="louis_tian" /><meta name="description" content="分析几种容易混淆的指针使用" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.65.2 with theme even" />
+
+
+<link rel="canonical" href="https://louis-tiany.github.io/post/c%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E8%A1%A5%E6%BC%8F/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="易混淆的C语言指针" />
+<meta property="og:description" content="分析几种容易混淆的指针使用" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://louis-tiany.github.io/post/c%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E8%A1%A5%E6%BC%8F/" />
+<meta property="article:published_time" content="2020-03-07T14:56:54+08:00" />
+<meta property="article:modified_time" content="2020-03-07T14:56:54+08:00" />
+<meta itemprop="name" content="易混淆的C语言指针">
+<meta itemprop="description" content="分析几种容易混淆的指针使用">
+<meta itemprop="datePublished" content="2020-03-07T14:56:54&#43;08:00" />
+<meta itemprop="dateModified" content="2020-03-07T14:56:54&#43;08:00" />
+<meta itemprop="wordCount" content="1506">
+
+
+
+<meta itemprop="keywords" content="C语言,指针," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="易混淆的C语言指针"/>
+<meta name="twitter:description" content="分析几种容易混淆的指针使用"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">BBBlog~~~</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">BBBlog~~~</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">易混淆的C语言指针</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-03-07 </span>
+        <div class="post-category">
+            <a href="/categories/c%E8%AF%AD%E8%A8%80/"> C语言 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#数组和指针">数组和指针</a></li>
+    <li><a href="#指针数组和数组指针">指针数组和数组指针</a>
+      <ul>
+        <li><a href="#指针数组">指针数组</a></li>
+      </ul>
+    </li>
+    <li><a href="#函数指针">函数指针</a>
+      <ul>
+        <li><a href="#函数指针-1">函数指针</a></li>
+        <li><a href="#参数为函数指针的函数">参数为函数指针的函数</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="c语言中几种易混淆的指针用法">C语言中几种易混淆的指针用法</h1>
+<p>指针是C语言的精华，在使用上非常灵活，十分强大。但是同时，也非常容易出错。尤其是当指针和数组混合使用的时候，刚开始看的时候十分使人迷惑，再加上函数指针，一个简单的指针定义和声明都像在看天书。以下就是看一些开源代码时候遇到的指针的几种易混淆易出错的点。</p>
+<h2 id="数组和指针">数组和指针</h2>
+<p><code>char str[10]</code></p>
+<p>上面定义了一个字符数组，<code>str</code>存放的类型是<code>char</code>型的变量。<code>str</code> 也是一个指针，指向数组第一个元素的内存地址。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="mi">1</span> <span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
+  <span class="mi">2</span> <span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+  <span class="mi">3</span>     <span class="kt">char</span> <span class="n">str</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">;</span>
+  <span class="mi">4</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">str</span><span class="p">);</span>
+  <span class="mi">5</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;str[0]:%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+  <span class="mi">6</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;str:%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">str</span><span class="p">);</span>
+  <span class="mi">7</span>
+  <span class="mi">8</span>     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="mi">9</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>以上代码为代码演示，<code>str</code>本身是一个指针，但是<code>str[0]</code>是一个数组中的元素，是一个<code>char</code>类型的变量，所以如果要打印它的地址，需要取地址运算符<code>&amp;</code>。程序的输出不出意外，<code>str[0]</code>的地址和<code>str</code>的地址相同。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">hello
+str[0]:0x7ffd923ede1e
+str:0x7ffd923ede1e
+</code></pre></td></tr></table>
+</div>
+</div><p>所以数组名的本质就是指向数组的第一个元素的指针。因此，C语言中通过数组第一个元素的指针来操作数组。</p>
+<p>还有一种比较迷惑的事情就是<code>char *s</code>。<code>s</code>在这里是一个字符指针。，但是同时，可以通过这个字符指针来操作一个字符数组，也就是字符串,下面举个例子。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="mi">1</span> <span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
+  <span class="mi">2</span> <span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+  <span class="mi">3</span>     <span class="kt">char</span> <span class="o">*</span><span class="n">pStr</span><span class="p">;</span>
+  <span class="mi">4</span>     <span class="kt">char</span> <span class="n">str</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">;</span>
+  <span class="mi">5</span>     <span class="n">pStr</span><span class="o">=</span><span class="n">str</span><span class="p">;</span>
+  <span class="mi">6</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;string:%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">pStr</span><span class="p">);</span>
+  <span class="mi">7</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;str[2]:%c</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">pStr</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+  <span class="mi">8</span>     <span class="n">pStr</span><span class="o">=</span><span class="s">&#34;world&#34;</span><span class="p">;</span>
+  <span class="mi">9</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;address:%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="o">&amp;</span><span class="s">&#34;world&#34;</span><span class="p">);</span>
+ <span class="mi">10</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;pStr:%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">pStr</span><span class="p">);</span>
+ <span class="mi">11</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;constant:%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">pStr</span><span class="p">);</span>
+ <span class="mi">12</span>     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+ <span class="mi">13</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上面代码定义了一个字符数组（字符串），再定义一个字符指针指向数组第一个元素。到这里都不难理解，但是后面直接给这个指针赋值就很奇怪了。<code>pStr</code>明明是一个指针，怎么能直接给他赋值为字符串呢。原因就在于这个字符串<code>“hello”</code>,在编译时，编译器认为它是一个常量。所以这里并不是直接将字符串赋值给<code>pStr</code>，而是让<code>pStr</code>指向字符串常量的地址。程序的输出也验证了这一观点。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">string:hello
+str[2]:l
+address:0x558e363b582a
+pStr:0x558e363b582a
+constant:world
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="指针数组和数组指针">指针数组和数组指针</h2>
+<p>下面辨析一下指针数组和数组指针。顾名思义，指针数组是一个数组，数组中存储的元素是指针。而数组指针是一个指针，它指向一个数组。</p>
+<h3 id="指针数组">指针数组</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="mi">1</span> <span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
+  <span class="mi">2</span> <span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+  <span class="mi">3</span>     <span class="kt">char</span> <span class="o">*</span><span class="n">array</span><span class="p">[]</span><span class="o">=</span><span class="p">{</span><span class="s">&#34;java&#34;</span><span class="p">,</span><span class="s">&#34;C&#34;</span><span class="p">,</span><span class="s">&#34;C++&#34;</span><span class="p">,</span><span class="s">&#34;python&#34;</span><span class="p">};</span>
+  <span class="mi">4</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;常量地址:</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+  <span class="mi">5</span>     <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="mi">6</span>         <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+  <span class="mi">7</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;-------------------</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+  <span class="mi">8</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;指针地址</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+  <span class="mi">9</span>     <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
+ <span class="mi">10</span>         <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+ <span class="mi">11</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;-------------------</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+ <span class="mi">12</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+ <span class="mi">13</span>     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+ <span class="mi">14</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>根据上文，数组中的这几个字符串实质上是地址。所以要通过定义一个指针数组来访问它们。可以根据打印出来地址的大小判断以上的观点。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">常量地址:
+0x5626c6fda884
+0x5626c6fda889
+0x5626c6fda88b
+0x5626c6fda88f
+-------------------
+指针地址
+0x7ffefc015360
+0x7ffefc015368
+0x7ffefc015370
+0x7ffefc015378
+-------------------
+java
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到，字符串常量在是按顺序存放的，由于字符串后面要加一个<code>\0</code>来表示字符结束，所以存储时会多占用一个字节。实验用的机器是64位，所以指针也是64位大小，可以看到指针的地址都是相差8个字节，也就是64位。</p>
+<h2 id="函数指针">函数指针</h2>
+<h3 id="函数指针-1">函数指针</h3>
+<p>函数指针首先是一个指针，它指向的是函数的地址。可以通过以下语句来创建并使用函数指针。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="mi">1</span> <span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
+  <span class="mi">2</span> <span class="kt">int</span> <span class="n">func</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
+  <span class="mi">3</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;a:%d b:%d a+b: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">);</span>
+  <span class="mi">4</span>     <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
+  <span class="mi">5</span> <span class="p">}</span>
+  <span class="mi">6</span> <span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+  <span class="mi">7</span>     <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">f1</span><span class="p">)(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">)</span><span class="o">=</span><span class="n">func</span><span class="p">;</span>
+  <span class="mi">8</span>     <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">f2</span><span class="p">)(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">)</span><span class="o">=&amp;</span><span class="n">func</span><span class="p">;</span>
+  <span class="mi">9</span>     <span class="n">printf</span><span class="p">(</span><span class="s">&#34;f1:%p  f2:%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">f1</span><span class="p">,</span><span class="n">f2</span><span class="p">);</span>
+ <span class="mi">10</span>     <span class="n">f1</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+ <span class="mi">11</span>     <span class="n">f2</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+ <span class="mi">12</span>     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+ <span class="mi">13</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上面定义了函数指针<code>f1,f2</code>，这两种方式来给指针赋值都是允许的。分别打印出指针的值，应该是相同的内容，指向了函数的地址。可以直接通过函数指针来调用函数。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">f1:0x55ab47c4564a  f2:0x55ab47c4564a
+a:2 b:2 a+b: 4
+a:2 b:2 a+b: 4
+</code></pre></td></tr></table>
+</div>
+</div><p>要注意的是在定义函数指针时一定要括号，让<code>*</code>号和指针名称结合。不然由于运算优先级的问题，定义的函数指针就会变成返回值为指针类型的函数。</p>
+<h3 id="参数为函数指针的函数">参数为函数指针的函数</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="mi">1</span> <span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
+  <span class="mi">2</span>
+  <span class="mi">3</span> <span class="kt">int</span> <span class="n">fun1</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
+  <span class="mi">4</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;a:%d b:%d a+b:%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">);</span>
+  <span class="mi">5</span>     <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
+  <span class="mi">6</span> <span class="p">}</span>
+  <span class="mi">7</span> <span class="nf">int</span> <span class="p">(</span><span class="o">*</span><span class="n">fun2</span><span class="p">(</span><span class="kt">void</span><span class="p">))(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">){</span>
+  <span class="mi">8</span>     <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pfun</span><span class="p">)(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">)</span><span class="o">=</span><span class="n">fun1</span><span class="p">;</span>
+  <span class="mi">9</span>     <span class="k">return</span> <span class="n">pfun</span><span class="p">;</span>
+ <span class="mi">10</span> <span class="p">}</span>
+ <span class="mi">11</span> <span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+ <span class="mi">12</span>     <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pfun</span><span class="p">)(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">)</span><span class="o">=</span><span class="n">fun2</span><span class="p">();</span>
+ <span class="mi">13</span>     <span class="n">pfun</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+ <span class="mi">14</span>
+ <span class="mi">15</span>     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+ <span class="mi">16</span> <span class="p">}</span>
+
+
+ <span class="err">输出结果：</span>
+    <span class="nl">a</span><span class="p">:</span><span class="mi">2</span> <span class="nl">b</span><span class="p">:</span><span class="mi">2</span> <span class="n">a</span><span class="o">+</span><span class="nl">b</span><span class="p">:</span><span class="mi">4</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>以上定义了函数<code>fun2</code>，它返回值类型是函数指针类型，指向<code>fun1</code>函数，<code>fun1</code>需要的函数参数是<code>void</code>。在主函数中定义了函数指针<code>pfun</code>指向<code>fun2</code>函数的返回值，也就是<code>fun1</code>函数的地址。</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">louis_tian</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-03-07
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/c%E8%AF%AD%E8%A8%80/">C语言</a>
+          <a href="/tags/%E6%8C%87%E9%92%88/">指针</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/second-post/">
+            <span class="next-text nav-default">朝花夕拾-二叉树</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="http://localhost:1313" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="http://localhost:1313" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://localhost:1313" class="iconfont icon-google" title="google"></a>
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+      <a href="http://localhost:1313" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="http://localhost:1313" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="http://localhost:1313" class="iconfont icon-douban" title="douban"></a>
+      <a href="http://localhost:1313" class="iconfont icon-pocket" title="pocket"></a>
+      <a href="http://localhost:1313" class="iconfont icon-tumblr" title="tumblr"></a>
+      <a href="http://localhost:1313" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="http://localhost:1313" class="iconfont icon-gitlab" title="gitlab"></a>
+      <a href="http://localhost:1313" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="https://louis-tiany.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">louis_tian</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
