@@ -48,7 +48,7 @@
 <meta itemprop="description" content="分析几种容易混淆的指针使用">
 <meta itemprop="datePublished" content="2020-03-07T14:56:54&#43;08:00" />
 <meta itemprop="dateModified" content="2020-03-07T14:56:54&#43;08:00" />
-<meta itemprop="wordCount" content="1506">
+<meta itemprop="wordCount" content="1441">
 
 
 
@@ -172,15 +172,15 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="mi">1</span> <span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
-  <span class="mi">2</span> <span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
-  <span class="mi">3</span>     <span class="kt">char</span> <span class="n">str</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">;</span>
-  <span class="mi">4</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">str</span><span class="p">);</span>
-  <span class="mi">5</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;str[0]:%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-  <span class="mi">6</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;str:%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">str</span><span class="p">);</span>
-  <span class="mi">7</span>
-  <span class="mi">8</span>     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="mi">9</span> <span class="p">}</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++">   <span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp"></span>   <span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+       <span class="kt">char</span> <span class="n">str</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">;</span>
+       <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">str</span><span class="p">);</span>
+       <span class="n">printf</span><span class="p">(</span><span class="s">&#34;str[0]:%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+       <span class="n">printf</span><span class="p">(</span><span class="s">&#34;str:%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">str</span><span class="p">);</span>
+  
+       <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+   <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>以上代码为代码演示，<code>str</code>本身是一个指针，但是<code>str[0]</code>是一个数组中的元素，是一个<code>char</code>类型的变量，所以如果要打印它的地址，需要取地址运算符<code>&amp;</code>。程序的输出不出意外，<code>str[0]</code>的地址和<code>str</code>的地址相同。</p>
@@ -215,19 +215,19 @@ str:0x7ffd923ede1e
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="mi">1</span> <span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
-  <span class="mi">2</span> <span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
-  <span class="mi">3</span>     <span class="kt">char</span> <span class="o">*</span><span class="n">pStr</span><span class="p">;</span>
-  <span class="mi">4</span>     <span class="kt">char</span> <span class="n">str</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">;</span>
-  <span class="mi">5</span>     <span class="n">pStr</span><span class="o">=</span><span class="n">str</span><span class="p">;</span>
-  <span class="mi">6</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;string:%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">pStr</span><span class="p">);</span>
-  <span class="mi">7</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;str[2]:%c</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">pStr</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
-  <span class="mi">8</span>     <span class="n">pStr</span><span class="o">=</span><span class="s">&#34;world&#34;</span><span class="p">;</span>
-  <span class="mi">9</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;address:%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="o">&amp;</span><span class="s">&#34;world&#34;</span><span class="p">);</span>
- <span class="mi">10</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;pStr:%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">pStr</span><span class="p">);</span>
- <span class="mi">11</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;constant:%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">pStr</span><span class="p">);</span>
- <span class="mi">12</span>     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
- <span class="mi">13</span> <span class="p">}</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp"></span>  <span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+      <span class="kt">char</span> <span class="o">*</span><span class="n">pStr</span><span class="p">;</span>
+      <span class="kt">char</span> <span class="n">str</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">;</span>
+      <span class="n">pStr</span><span class="o">=</span><span class="n">str</span><span class="p">;</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;string:%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">pStr</span><span class="p">);</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;str[2]:%c</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">pStr</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+      <span class="n">pStr</span><span class="o">=</span><span class="s">&#34;world&#34;</span><span class="p">;</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;address:%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="o">&amp;</span><span class="s">&#34;world&#34;</span><span class="p">);</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;pStr:%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">pStr</span><span class="p">);</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;constant:%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">pStr</span><span class="p">);</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>上面代码定义了一个字符数组（字符串），再定义一个字符指针指向数组第一个元素。到这里都不难理解，但是后面直接给这个指针赋值就很奇怪了。<code>pStr</code>明明是一个指针，怎么能直接给他赋值为字符串呢。原因就在于这个字符串<code>“hello”</code>,在编译时，编译器认为它是一个常量。所以这里并不是直接将字符串赋值给<code>pStr</code>，而是让<code>pStr</code>指向字符串常量的地址。程序的输出也验证了这一观点。</p>
@@ -268,20 +268,20 @@ constant:world
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="mi">1</span> <span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
-  <span class="mi">2</span> <span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
-  <span class="mi">3</span>     <span class="kt">char</span> <span class="o">*</span><span class="n">array</span><span class="p">[]</span><span class="o">=</span><span class="p">{</span><span class="s">&#34;java&#34;</span><span class="p">,</span><span class="s">&#34;C&#34;</span><span class="p">,</span><span class="s">&#34;C++&#34;</span><span class="p">,</span><span class="s">&#34;python&#34;</span><span class="p">};</span>
-  <span class="mi">4</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;常量地址:</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
-  <span class="mi">5</span>     <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
-  <span class="mi">6</span>         <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-  <span class="mi">7</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;-------------------</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
-  <span class="mi">8</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;指针地址</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
-  <span class="mi">9</span>     <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
- <span class="mi">10</span>         <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
- <span class="mi">11</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;-------------------</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
- <span class="mi">12</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
- <span class="mi">13</span>     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
- <span class="mi">14</span> <span class="p">}</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp"></span>  <span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+      <span class="kt">char</span> <span class="o">*</span><span class="n">array</span><span class="p">[]</span><span class="o">=</span><span class="p">{</span><span class="s">&#34;java&#34;</span><span class="p">,</span><span class="s">&#34;C&#34;</span><span class="p">,</span><span class="s">&#34;C++&#34;</span><span class="p">,</span><span class="s">&#34;python&#34;</span><span class="p">};</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;常量地址:</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+      <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
+          <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;-------------------</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;指针地址</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+      <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
+          <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;-------------------</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>根据上文，数组中的这几个字符串实质上是地址。所以要通过定义一个指针数组来访问它们。可以根据打印出来地址的大小判断以上的观点。</p>
@@ -338,19 +338,19 @@ java
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="mi">1</span> <span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
-  <span class="mi">2</span> <span class="kt">int</span> <span class="n">func</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
-  <span class="mi">3</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;a:%d b:%d a+b: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">);</span>
-  <span class="mi">4</span>     <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
-  <span class="mi">5</span> <span class="p">}</span>
-  <span class="mi">6</span> <span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
-  <span class="mi">7</span>     <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">f1</span><span class="p">)(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">)</span><span class="o">=</span><span class="n">func</span><span class="p">;</span>
-  <span class="mi">8</span>     <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">f2</span><span class="p">)(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">)</span><span class="o">=&amp;</span><span class="n">func</span><span class="p">;</span>
-  <span class="mi">9</span>     <span class="n">printf</span><span class="p">(</span><span class="s">&#34;f1:%p  f2:%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">f1</span><span class="p">,</span><span class="n">f2</span><span class="p">);</span>
- <span class="mi">10</span>     <span class="n">f1</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
- <span class="mi">11</span>     <span class="n">f2</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
- <span class="mi">12</span>     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
- <span class="mi">13</span> <span class="p">}</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp"></span>  <span class="kt">int</span> <span class="nf">func</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;a:%d b:%d a+b: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">);</span>
+      <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+      <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">f1</span><span class="p">)(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">)</span><span class="o">=</span><span class="n">func</span><span class="p">;</span>
+      <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">f2</span><span class="p">)(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">)</span><span class="o">=&amp;</span><span class="n">func</span><span class="p">;</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;f1:%p  f2:%p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">f1</span><span class="p">,</span><span class="n">f2</span><span class="p">);</span>
+      <span class="n">f1</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+      <span class="n">f2</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>上面定义了函数指针<code>f1,f2</code>，这两种方式来给指针赋值都是允许的。分别打印出指针的值，应该是相同的内容，指向了函数的地址。可以直接通过函数指针来调用函数。</p>
@@ -392,22 +392,22 @@ a:2 b:2 a+b: 4
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="mi">1</span> <span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
-  <span class="mi">2</span>
-  <span class="mi">3</span> <span class="kt">int</span> <span class="n">fun1</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
-  <span class="mi">4</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;a:%d b:%d a+b:%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">);</span>
-  <span class="mi">5</span>     <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
-  <span class="mi">6</span> <span class="p">}</span>
-  <span class="mi">7</span> <span class="nf">int</span> <span class="p">(</span><span class="o">*</span><span class="n">fun2</span><span class="p">(</span><span class="kt">void</span><span class="p">))(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">){</span>
-  <span class="mi">8</span>     <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pfun</span><span class="p">)(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">)</span><span class="o">=</span><span class="n">fun1</span><span class="p">;</span>
-  <span class="mi">9</span>     <span class="k">return</span> <span class="n">pfun</span><span class="p">;</span>
- <span class="mi">10</span> <span class="p">}</span>
- <span class="mi">11</span> <span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
- <span class="mi">12</span>     <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pfun</span><span class="p">)(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">)</span><span class="o">=</span><span class="n">fun2</span><span class="p">();</span>
- <span class="mi">13</span>     <span class="n">pfun</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
- <span class="mi">14</span>
- <span class="mi">15</span>     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
- <span class="mi">16</span> <span class="p">}</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp"></span> 
+  <span class="kt">int</span> <span class="nf">fun1</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;a:%d b:%d a+b:%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">);</span>
+      <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">fun2</span><span class="p">(</span><span class="kt">void</span><span class="p">))(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">){</span>
+      <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pfun</span><span class="p">)(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">)</span><span class="o">=</span><span class="n">fun1</span><span class="p">;</span>
+      <span class="k">return</span> <span class="n">pfun</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+      <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pfun</span><span class="p">)(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">)</span><span class="o">=</span><span class="n">fun2</span><span class="p">();</span>
+      <span class="n">pfun</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+ 
+      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
 
 
  <span class="err">输出结果：</span>

@@ -48,7 +48,7 @@
 <meta itemprop="description" content="网络字节序和主机字节序辨析">
 <meta itemprop="datePublished" content="2020-03-12T23:48:36&#43;08:00" />
 <meta itemprop="dateModified" content="2020-03-12T23:48:36&#43;08:00" />
-<meta itemprop="wordCount" content="731">
+<meta itemprop="wordCount" content="692">
 
 
 
@@ -169,17 +169,17 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="mi">1</span> <span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
-  <span class="mi">2</span> <span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">arpa</span><span class="o">/</span><span class="n">inet</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
-  <span class="mi">3</span> <span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
-  <span class="mi">4</span> <span class="p">{</span>
-  <span class="mi">5</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;unsigned int:%ld</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">));</span>
-  <span class="mi">6</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;unsigned char:%ld</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="p">));</span>
-  <span class="mi">7</span>     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">a</span><span class="o">=</span><span class="mh">0x12345678</span><span class="p">;</span>
-  <span class="mi">8</span>     <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pointer</span><span class="o">=</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">);</span>
-  <span class="mi">9</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;host :%p:%0x</span><span class="se">\t</span><span class="s">%p:%0x</span><span class="se">\t</span><span class="s">%p:%0x</span><span class="se">\t</span><span class="s">%p:%0x</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">pointer</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">pointer</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">pointer</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">pointer</span><span class="p">[</span><span class="mi">3</span><span class="p">]);</span>
-  <span class="mi">10</span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="mi">11</span> <span class="p">}</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp"></span>  <span class="cp">#include</span><span class="cpf">&lt;arpa/inet.h&gt;</span><span class="cp">
+</span><span class="cp"></span>  <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+  <span class="p">{</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;unsigned int:%ld</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">));</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;unsigned char:%ld</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="p">));</span>
+      <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">a</span><span class="o">=</span><span class="mh">0x12345678</span><span class="p">;</span>
+      <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pointer</span><span class="o">=</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">);</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;host :%p:%0x</span><span class="se">\t</span><span class="s">%p:%0x</span><span class="se">\t</span><span class="s">%p:%0x</span><span class="se">\t</span><span class="s">%p:%0x</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">pointer</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">pointer</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">pointer</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">pointer</span><span class="p">[</span><span class="mi">3</span><span class="p">]);</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+   <span class="p">}</span>
  <span class="err">程序运行结果：</span>
 <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">:</span><span class="mi">8</span>
 <span class="kt">unsigned</span> <span class="kt">char</span><span class="o">:</span><span class="mi">1</span>
@@ -210,19 +210,19 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="mi">1</span> <span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
-  <span class="mi">2</span> <span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">arpa</span><span class="o">/</span><span class="n">inet</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
-  <span class="mi">3</span> <span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
-  <span class="mi">4</span> <span class="p">{</span>
-  <span class="mi">5</span>     <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">a</span><span class="o">=</span><span class="mh">0x12345678</span><span class="p">;</span>
-  <span class="mi">6</span>     <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pointer</span><span class="o">=</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">);</span>
-  <span class="mi">7</span>
-  <span class="mi">8</span>     <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">b</span><span class="o">=</span><span class="n">htonl</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
-  <span class="mi">9</span>     <span class="n">pointer</span><span class="o">=</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)(</span><span class="o">&amp;</span><span class="n">b</span><span class="p">);</span>
- <span class="mi">10</span>     <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;network :%p:%0x</span><span class="se">\t</span><span class="s">%p:%0x</span><span class="se">\t</span><span class="s">%p:%0x</span><span class="se">\t</span><span class="s">%p:%0x</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">pointer</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">pointer</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">pointer</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">pointer</span><span class="p">[</span><span class="mi">3</span><span class="p">);]</span>    
- <span class="mi">11</span>
- <span class="mi">12</span>     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
- <span class="mi">13</span> <span class="p">}</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp"></span>  <span class="cp">#include</span><span class="cpf">&lt;arpa/inet.h&gt;</span><span class="cp">
+</span><span class="cp"></span>  <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+  <span class="p">{</span>
+      <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">a</span><span class="o">=</span><span class="mh">0x12345678</span><span class="p">;</span>
+      <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pointer</span><span class="o">=</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">);</span>
+ 
+      <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">b</span><span class="o">=</span><span class="n">htonl</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+      <span class="n">pointer</span><span class="o">=</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)(</span><span class="o">&amp;</span><span class="n">b</span><span class="p">);</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;network :%p:%0x</span><span class="se">\t</span><span class="s">%p:%0x</span><span class="se">\t</span><span class="s">%p:%0x</span><span class="se">\t</span><span class="s">%p:%0x</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">pointer</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">pointer</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">pointer</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">pointer</span><span class="p">[</span><span class="mi">3</span><span class="p">);]</span>    
+ 
+      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
  <span class="err">输出结果：</span><span class="nl">network</span> <span class="p">:</span><span class="mh">0x7ffd9416f4d8</span><span class="o">:</span><span class="mi">12</span>      <span class="mh">0x7ffd9416f4d9</span><span class="o">:</span><span class="mi">34</span>       <span class="mh">0x7ffd9416f4da</span><span class="o">:</span><span class="mi">56</span>       <span class="mh">0x7ffd9416f4db</span><span class="o">:</span><span class="mi">78</span>
 
 </code></pre></td></tr></table>
@@ -250,21 +250,21 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="mi">1</span> <span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
-  <span class="mi">2</span> <span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">arpa</span><span class="o">/</span><span class="n">inet</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
-  <span class="mi">3</span> <span class="kt">void</span> <span class="n">judge</span><span class="p">()</span>
-  <span class="mi">4</span> <span class="p">{</span>
-  <span class="mi">5</span>     <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mh">0x12345678</span><span class="p">;</span>
-  <span class="mi">6</span>     <span class="nf">if</span><span class="p">(</span> <span class="o">*</span><span class="p">((</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0x12</span><span class="p">)</span>
-  <span class="mi">7</span>         <span class="n">printf</span><span class="p">(</span><span class="s">&#34;big endian </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
-  <span class="mi">8</span>     <span class="k">else</span>
-  <span class="mi">9</span>         <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;little endian </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
- <span class="mi">10</span> <span class="p">}</span>
- <span class="mi">11</span> <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
- <span class="mi">12</span> <span class="p">{</span>
- <span class="mi">13</span>     <span class="n">judge</span><span class="p">();</span>
- <span class="mi">14</span>     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
- <span class="mi">15</span> <span class="p">}</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp"></span>  <span class="cp">#include</span><span class="cpf">&lt;arpa/inet.h&gt;</span><span class="cp">
+</span><span class="cp"></span>  <span class="kt">void</span> <span class="nf">judge</span><span class="p">()</span>
+  <span class="p">{</span>
+      <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mh">0x12345678</span><span class="p">;</span>
+      <span class="k">if</span><span class="p">(</span> <span class="o">*</span><span class="p">((</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0x12</span><span class="p">)</span>
+          <span class="n">printf</span><span class="p">(</span><span class="s">&#34;big endian </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+      <span class="k">else</span>
+          <span class="n">printf</span><span class="p">(</span><span class="s">&#34;little endian </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+  <span class="p">{</span>
+      <span class="n">judge</span><span class="p">();</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
 
 </code></pre></td></tr></table>
 </div>
