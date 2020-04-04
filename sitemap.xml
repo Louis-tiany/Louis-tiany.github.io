@@ -10,35 +10,56 @@
   
   <url>
     <loc>https://louis-tiany.github.io/tags/c/</loc>
-    <lastmod>2020-03-12T23:48:36+08:00</lastmod>
+    <lastmod>2020-04-04T17:03:52+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://louis-tiany.github.io/post/c_multithread/</loc>
+    <lastmod>2020-04-04T17:03:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://louis-tiany.github.io/categories/</loc>
-    <lastmod>2020-03-12T23:48:36+08:00</lastmod>
+    <lastmod>2020-04-04T17:03:52+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://louis-tiany.github.io/tags/c%E8%AF%AD%E8%A8%80/</loc>
+    <lastmod>2020-04-04T17:03:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://louis-tiany.github.io/categories/c%E8%AF%AD%E8%A8%80/</loc>
-    <lastmod>2020-03-12T23:48:36+08:00</lastmod>
+    <lastmod>2020-04-04T17:03:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://louis-tiany.github.io/post/</loc>
-    <lastmod>2020-03-12T23:48:36+08:00</lastmod>
+    <lastmod>2020-04-04T17:03:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://louis-tiany.github.io/tags/</loc>
-    <lastmod>2020-03-12T23:48:36+08:00</lastmod>
+    <lastmod>2020-04-04T17:03:52+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://louis-tiany.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
+    <lastmod>2020-04-04T17:03:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -53,13 +74,6 @@
   <url>
     <loc>https://louis-tiany.github.io/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</loc>
     <lastmod>2020-03-12T23:48:36+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://louis-tiany.github.io/tags/c%E8%AF%AD%E8%A8%80/</loc>
-    <lastmod>2020-03-07T14:56:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

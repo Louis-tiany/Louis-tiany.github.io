@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>C_MultiThread - louis&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="louis_tian" /><meta name="description" content="Linux系统下C语言多线程-创建线程&#34;&#34;" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.65.2 with theme even" />
+
+
+<link rel="canonical" href="https://louis-tiany.github.io/post/c_multithread/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="C_MultiThread" />
+<meta property="og:description" content="Linux系统下C语言多线程-创建线程&#34;&#34;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://louis-tiany.github.io/post/c_multithread/" />
+<meta property="article:published_time" content="2020-04-04T17:03:52+08:00" />
+<meta property="article:modified_time" content="2020-04-04T17:03:52+08:00" />
+<meta itemprop="name" content="C_MultiThread">
+<meta itemprop="description" content="Linux系统下C语言多线程-创建线程&#34;&#34;">
+<meta itemprop="datePublished" content="2020-04-04T17:03:52&#43;08:00" />
+<meta itemprop="dateModified" content="2020-04-04T17:03:52&#43;08:00" />
+<meta itemprop="wordCount" content="1675">
+
+
+
+<meta itemprop="keywords" content="C语言,多线程," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="C_MultiThread"/>
+<meta name="twitter:description" content="Linux系统下C语言多线程-创建线程&#34;&#34;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">BBBlog~~~</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">BBBlog~~~</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">C_MultiThread</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-04-04 </span>
+        <div class="post-category">
+            <a href="/categories/c%E8%AF%AD%E8%A8%80/"> C语言 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#创建线程">创建线程</a></li>
+    <li><a href="#线程退出">线程退出</a></li>
+    <li><a href="#线程接合join和分离detach">线程接合(join)和分离（detach)</a>
+      <ul>
+        <li><a href="#线程接合">线程接合</a></li>
+        <li><a href="#线程分离">线程分离</a></li>
+      </ul>
+    </li>
+    <li><a href="#代码示例">代码示例</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="程序进程和线程">程序、进程和线程</h1>
+<p>程序是指令和数据的有序集合。它是一个静态概念。而进程是运行中的程序，是一个动态概念。一个程序要想运行，必须由操作系统为它分配资源，变为进程，也就是”活动的程序“。
+进程是操作系统资源分配的最小单位，而线程是程序执行的最小单位，操作系统的调度也是以线程为单位的，一个进程可以拥有多个线程。</p>
+<p>由于虚拟内存技术，不同的进程的地址空间都是独立的，防止了进程之间的干扰，导致进程的数据被篡改，使得进程异常崩溃。但也是由于这种安全保护机制，使得进程之间进行通信变得非常麻烦。</p>
+<p>相对于进程。线程并不独立于其他进程，因此线程与其他线程共享其代码段、数据段和操作系统资源(如打开的文件和信号)。但是，与进程一样，线程有自己的程序计数器(PC)、寄存器集和堆栈空间。因此线程共享数据非常方便，并且具有良好的并发性。</p>
+<h1 id="多线程的相关函数">多线程的相关函数</h1>
+<h2 id="创建线程">创建线程</h2>
+<p>创建线程的函数原型：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">pthread_create</span><span class="p">(</span><span class="n">pthread_t</span> <span class="o">*</span><span class="kr">thread</span><span class="p">,</span> <span class="k">const</span> <span class="n">pthread_attr_t</span> <span class="o">*</span><span class="n">attr</span><span class="p">,</span><span class="kt">void</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">start_routine</span><span class="p">)</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">),</span> <span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果线程创建成功，就会返回0，否则返回错误号。创建线程需要四个参数：</p>
+<ul>
+<li>线程id：第一个参数是<code>pthread_t</code>类型的变量，它本质上是一个无符号整数，需要在创建线程之前定义，作为线程的标识符。</li>
+<li>线程属性：该参数可以设置线程的优先级，初始栈大小等属性，如果传入<code>NULL</code>，线程启动时会使用默认的参数。</li>
+<li>函数指针：第三个参数是线程启动时要执行的函数的指针，也就是函数名。</li>
+<li>线程函数参数：线程启动时要执行的函数可以传入参数，如果有多个参数可以定义一个结构体，将参数都放入结构体中，再传入结构体指针，需要注意的是一定要把结构体指针转换为<code>void *</code>类型的指针，在线程函数内部再转换为结构体指针类型。</li>
+</ul>
+<h2 id="线程退出">线程退出</h2>
+<p>函数原型：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">pthread_exit</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">retval</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>该函数可以终止一个线程，线程的返回状态通过指针来进行存储。</p>
+<h2 id="线程接合join和分离detach">线程接合(join)和分离（detach)</h2>
+<h3 id="线程接合">线程接合</h3>
+<p>创建多个线程后，线程之间执行的先后顺序由操作系统决定。但是往往实际的编程中，很多时候需要对线程的行为进行控制，即存在一个主控线程，主控线程创建新线程去执行其他任务。所以，为了让主控线程可以得到子线程的执行结果，需要让主控线程等待子线程执行结束。否则，线程的执行完全由操作系统来调度，很有可能主线程执行完毕退出，而子线程还没有执行完，这样的话线程之间就无法相互配合协作。</p>
+<p>线程等待函数原型：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">pthread_join</span><span class="p">(</span><span class="n">pthread_t</span> <span class="kr">thread</span><span class="p">,</span> <span class="kt">void</span> <span class="o">**</span><span class="n">retval</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>该函数可以等待一个指定的线程结束，并且通过<code>retval</code>来得到要等待的线程的返回值。</p>
+<h3 id="线程分离">线程分离</h3>
+<p>另一种线程类型就是以分离方式来启动线程。分离类型的线程独立于主控线程，线程结束后自动释放资源。分离类型的线程一般是用于子线程执行的相关信息返回到主线程的场景。
+有三种方式可以将线程设为<code>detach</code>类型。</p>
+<ul>
+<li>创建线程时，指定线程的属性：<code>pthread_attr_setdetachstate(&amp;attr, PTHREAD_CREATE_DETACHED);</code></li>
+<li>通过子线程调用<code>pthread_detach(pthread_self())</code></li>
+<li>在主控线程中调用<code>pthread_detach(thread_id)</code>函数，传入的参数为要设置<code>detach</code>属性的线程<code>id</code></li>
+</ul>
+<p><code>detach</code>函数原型：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">pthread_detach</span><span class="p">(</span><span class="n">pthread_t</span> <span class="kr">thread</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果调用成功，返回值为0，否则返回错误号。</p>
+<h2 id="代码示例">代码示例</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;pthread.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp"></span><span class="kt">void</span> <span class="o">*</span><span class="nf">threadFunction</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;the argumemt is:%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">arg</span><span class="p">);</span>
+    <span class="k">return</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">pthread_t</span> <span class="n">th1</span><span class="p">,</span><span class="n">th2</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">ret1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">ret2</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">arg1</span><span class="o">=</span><span class="s">&#34;i am thread 1&#34;</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">arg2</span><span class="o">=</span><span class="s">&#34;i am thread 2&#34;</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">retVal1</span><span class="p">;</span>
+
+    <span class="n">ret1</span><span class="o">=</span><span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">th1</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="n">threadFunction</span><span class="p">,(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">arg1</span><span class="p">);</span>
+    <span class="n">ret2</span><span class="o">=</span><span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">th2</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="n">threadFunction</span><span class="p">,(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">arg2</span><span class="p">);</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">ret1</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;thread1 create success</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">&#34;thread1 create failed&#34;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">ret2</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;thread2 create success</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">&#34;thread2 create failed&#34;</span><span class="p">);</span>
+    <span class="n">pthread_detach</span><span class="p">(</span><span class="n">th2</span><span class="p">);</span>
+    <span class="n">pthread_join</span><span class="p">(</span><span class="n">th1</span><span class="p">,</span><span class="o">&amp;</span><span class="n">retVal1</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;thread 1 exit status:%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">retVal1</span><span class="p">);</span>
+    <span class="c1">//sleep(1);
+</span><span class="c1"></span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>以上程序设置了开启了两个新线程，其中<code>th1</code>设置<code>join</code>类型，所以<code>th1</code>线程一定会打印出结果，<code>th2</code>以<code>detach</code>类型，在实际运行时，<code>th2</code>线程有可能还没执行，主线程就退出了，如果让主线程<code>sleep</code>，等待<code>th2</code>线程，那么可以看到<code>th2</code>线程的执行结果。</p>
+<p>需要注意的是，<code>pthread_join</code>函数的第二个参数要求是二级指针，但是指针本质上就是一个变量，它存储的可以是内存地址，也可以是其他内容。所以这里直接定义一个指针，传入指针的地址，<code>pthread_join</code>函数会给传入的指针指向的地址写入线程的退出状态。然后，在主线程中，直接以<code>%d</code>的形式打印出指针变量的值。</p>
+<p>执行结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">the argumemt is:i am thread 1
+thread1 create success
+thread2 create success
+thread 1 exit status:0
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">louis_tian</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-04-04
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/c%E8%AF%AD%E8%A8%80/">C语言</a>
+          <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/%E5%AD%97%E8%8A%82%E5%BA%8F/">
+            <span class="next-text nav-default">字节序</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="http://localhost:1313" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="http://localhost:1313" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://localhost:1313" class="iconfont icon-google" title="google"></a>
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+      <a href="http://localhost:1313" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="http://localhost:1313" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="http://localhost:1313" class="iconfont icon-douban" title="douban"></a>
+      <a href="http://localhost:1313" class="iconfont icon-pocket" title="pocket"></a>
+      <a href="http://localhost:1313" class="iconfont icon-tumblr" title="tumblr"></a>
+      <a href="http://localhost:1313" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="http://localhost:1313" class="iconfont icon-gitlab" title="gitlab"></a>
+      <a href="http://localhost:1313" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="https://louis-tiany.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">louis_tian</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
