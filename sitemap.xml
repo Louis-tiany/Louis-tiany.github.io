@@ -10,48 +10,69 @@
   
   <url>
     <loc>https://louis-tiany.github.io/tags/c/</loc>
-    <lastmod>2020-04-04T17:03:52+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://louis-tiany.github.io/post/c_multithread/</loc>
-    <lastmod>2020-04-04T17:03:52+08:00</lastmod>
+    <lastmod>2020-04-05T15:43:47+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://louis-tiany.github.io/categories/</loc>
-    <lastmod>2020-04-04T17:03:52+08:00</lastmod>
+    <lastmod>2020-04-05T15:43:47+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://louis-tiany.github.io/tags/c%E8%AF%AD%E8%A8%80/</loc>
-    <lastmod>2020-04-04T17:03:52+08:00</lastmod>
+    <lastmod>2020-04-05T15:43:47+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://louis-tiany.github.io/categories/c%E8%AF%AD%E8%A8%80/</loc>
-    <lastmod>2020-04-04T17:03:52+08:00</lastmod>
+    <lastmod>2020-04-05T15:43:47+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://louis-tiany.github.io/tags/linux/</loc>
+    <lastmod>2020-04-05T15:43:47+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://louis-tiany.github.io/tags/mmap/</loc>
+    <lastmod>2020-04-05T15:43:47+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://louis-tiany.github.io/post/</loc>
-    <lastmod>2020-04-04T17:03:52+08:00</lastmod>
+    <lastmod>2020-04-05T15:43:47+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://louis-tiany.github.io/tags/</loc>
+    <lastmod>2020-04-05T15:43:47+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://louis-tiany.github.io/post/%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E5%AE%9E%E6%88%98/</loc>
+    <lastmod>2020-04-05T15:43:47+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://louis-tiany.github.io/post/c_multithread/</loc>
     <lastmod>2020-04-04T17:03:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
