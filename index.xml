@@ -17,10 +17,16 @@
       <pubDate>Sun, 20 Aug 2017 21:38:52 +0800</pubDate>
       
       <guid>https://louis-tiany.github.io/about/</guid>
-      <description>Hugo is a static site engine written in Go. jsjkjsfkj;lskjfkfkljfk
-sfdjksjf
-jsklfjsf It makes use of a variety of open source projects including:
- Cobra Viper J Walter Weatherman Cast  Learn more and contribute on GitHub.</description>
+      <description>自留地 Cobra Viper J Walter Weatherman Cast Learn more and contribute on GitHub.</description>
+    </item>
+    
+    <item>
+      <title>锁与条件变量</title>
+      <link>https://louis-tiany.github.io/post/%E9%94%81%E4%B8%8E%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F/</link>
+      <pubDate>Tue, 12 May 2020 20:43:44 +0800</pubDate>
+      
+      <guid>https://louis-tiany.github.io/post/%E9%94%81%E4%B8%8E%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F/</guid>
+      <description></description>
     </item>
     
     <item>
