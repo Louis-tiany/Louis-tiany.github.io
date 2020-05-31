@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>C_threadpool - louis&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="louis_tian" /><meta name="description" content="C实现简单的线程池" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.65.2 with theme even" />
+
+
+<link rel="canonical" href="https://louis-tiany.github.io/post/c_threadpool/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+<meta property="og:title" content="C_threadpool" />
+<meta property="og:description" content="C实现简单的线程池" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://louis-tiany.github.io/post/c_threadpool/" />
+<meta property="article:published_time" content="2020-05-22T20:32:39+08:00" />
+<meta property="article:modified_time" content="2020-05-22T20:32:39+08:00" />
+<meta itemprop="name" content="C_threadpool">
+<meta itemprop="description" content="C实现简单的线程池">
+<meta itemprop="datePublished" content="2020-05-22T20:32:39&#43;08:00" />
+<meta itemprop="dateModified" content="2020-05-22T20:32:39&#43;08:00" />
+<meta itemprop="wordCount" content="1644">
+
+
+
+<meta itemprop="keywords" content="线程池,多线程编程," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="C_threadpool"/>
+<meta name="twitter:description" content="C实现简单的线程池"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">BBBlog~~~</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">BBBlog~~~</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">C_threadpool</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-05-22 </span>
+        <div class="post-category">
+            <a href="/categories/c/"> C </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>之前学习了互斥锁和条件变量，为了对它们更加熟悉，于是想到了可以学习一下线程池的实现。</p>
+<p>线程池，顾名思义，就是由线程组成的一个“池子”。在程序一开始可以直接申请若干个线程，当有任务到来时，将任务交给线程池去完成。这样可以避免频繁的创建和销毁线程，提高运行效率。</p>
+<p>线程池的工作模式和“生产者-消费者”问题十分相似。线程池中的线程作为消费者，去消费到来的任务。而主线程也就是控制线程不断向线程池中添加任务。</p>
+<h1 id="线程池的数据结构">线程池的数据结构</h1>
+<p>线程池主要需要用到以下两个结构体：</p>
+<ol>
+<li>任务结构体：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="k">struct</span><span class="p">{</span>
+    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">function</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="p">);</span><span class="c1">//函数指针
+</span><span class="c1"></span>    <span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">;</span><span class="c1">//函数参数
+</span><span class="c1"></span><span class="p">}</span><span class="n">threadpool_task_t</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>主线程不断向线程池中加入任务，也就是上面的任务结构体。</p>
+<ol start="2">
+<li>线程池结构体</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c">  <span class="k">struct</span> <span class="n">threadpool_t</span><span class="p">{</span>
+      <span class="n">pthread_mutex_t</span> <span class="n">lock</span><span class="p">;</span>  
+      <span class="n">pthread_cond_t</span> <span class="n">cond</span><span class="p">;</span>
+
+      <span class="n">pthread_t</span> <span class="o">*</span><span class="n">threads</span><span class="p">;</span>
+      <span class="n">threadpool_task_t</span> <span class="o">*</span><span class="n">queue</span><span class="p">;</span>
+  
+      <span class="kt">int</span> <span class="n">thread_count</span><span class="p">;</span> <span class="c1">//线程池初始化时的线程数
+</span><span class="c1"></span>      <span class="kt">int</span> <span class="n">queue_size</span><span class="p">;</span> <span class="c1">//任务队列大小
+</span><span class="c1"></span>      <span class="kt">int</span> <span class="n">head</span><span class="p">;</span> <span class="c1">//任务队列队头
+</span><span class="c1"></span>      <span class="kt">int</span> <span class="n">tail</span><span class="p">;</span> <span class="c1">//任务队列队尾
+</span><span class="c1"></span>      <span class="kt">int</span> <span class="n">count</span><span class="p">;</span> <span class="c1">//当前任务队列中的任务数目
+</span><span class="c1"></span>      <span class="kt">int</span> <span class="n">shutdown</span><span class="p">;</span> <span class="c1">//是否停止线程池
+</span><span class="c1"></span>      <span class="kt">int</span> <span class="n">started</span><span class="p">;</span> <span class="c1">//当前启动的线程数目
+</span><span class="c1"></span>  <span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>首先线程池的结构体对于线程池中每个线程是共享的，为了保护共享变量，必须要为该线程池结构体配备互斥锁和条件变量。</p>
+<p>需要一个循环队列作为任务队列，来保存到来的但是还没有执行的任务,在本例中使用数组来模拟循环队列，这个数组的类型是上面任务结构体的类型。这样就可以将需要执行的函数和函数参数保存起来。当有任务被执行完即有空闲线程时就可以从任务队列中过的任务函数和函数参数。</p>
+<h1 id="线程池操作api">线程池操作API</h1>
+<ol>
+<li>创建线程池
+创建线程池需要指定线程池有多少个线程，还有队列大小,该函数主要是对线程池参数进行初始化。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">threadpool_t</span> <span class="o">*</span><span class="nf">threadpool_create</span><span class="p">(</span><span class="kt">int</span> <span class="n">thread_count</span><span class="p">,</span><span class="kt">int</span> <span class="n">queue_size</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">threadpool_t</span> <span class="o">*</span><span class="n">pool</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    
+    <span class="k">if</span><span class="p">(</span><span class="n">thread_count</span><span class="o">&lt;=</span><span class="mi">0</span><span class="o">||</span><span class="n">thread_count</span><span class="o">&gt;</span><span class="n">MAX_THREADS</span><span class="o">||</span><span class="n">queue_size</span><span class="o">&lt;=</span><span class="mi">0</span><span class="o">||</span><span class="n">queue_size</span><span class="o">&gt;</span><span class="n">MAX_QUEUE</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">((</span><span class="n">pool</span><span class="o">=</span><span class="p">(</span><span class="n">threadpool_t</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">threadpool_t</span><span class="p">)))</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="n">printError</span><span class="p">(</span><span class="n">pool</span><span class="p">);</span>
+
+    <span class="n">pool</span><span class="o">-&gt;</span><span class="n">thread_count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="n">pool</span><span class="o">-&gt;</span><span class="n">queue_size</span><span class="o">=</span><span class="n">queue_size</span><span class="p">;</span>
+    <span class="n">pool</span><span class="o">-&gt;</span><span class="n">head</span><span class="o">=</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">tail</span><span class="o">=</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="n">pool</span><span class="o">-&gt;</span><span class="n">shutdown</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="n">pool</span><span class="o">-&gt;</span><span class="n">started</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">pool</span><span class="o">-&gt;</span><span class="n">threads</span><span class="o">=</span><span class="p">(</span><span class="n">pthread_t</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">pthread_t</span><span class="p">)</span><span class="o">*</span><span class="n">thread_count</span><span class="p">);</span>
+    <span class="n">pool</span><span class="o">-&gt;</span><span class="n">queue</span><span class="o">=</span><span class="p">(</span><span class="n">threadpool_task_t</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">threadpool_task_t</span><span class="p">)</span><span class="o">*</span><span class="n">queue_size</span><span class="p">);</span>
+
+    <span class="k">if</span><span class="p">((</span><span class="n">pthread_mutex_init</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">),</span><span class="nb">NULL</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span><span class="o">||</span><span class="p">(</span><span class="n">pthread_cond_init</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">cond</span><span class="p">),</span><span class="nb">NULL</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">))</span>
+        <span class="n">printError</span><span class="p">(</span><span class="n">pool</span><span class="p">);</span>
+
+    <span class="c1">//start worker
+</span><span class="c1"></span>    <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">thread_count</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">threads</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span><span class="nb">NULL</span><span class="p">,</span><span class="n">threadpool_thread</span><span class="p">,(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">pool</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">){</span>
+            <span class="n">threadpool_destroy</span><span class="p">(</span><span class="n">pool</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span><span class="c1">//如果创建线程失败就销毁线程池，然后返回空指针
+</span><span class="c1"></span>            <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">pool</span><span class="o">-&gt;</span><span class="n">thread_count</span><span class="o">++</span><span class="p">;</span>
+        <span class="n">pool</span><span class="o">-&gt;</span><span class="n">started</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">pool</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在创建线程池时，<code>pthread_create()</code>会传入以下函数来创建线程。<code>threadpool_thread</code>函数参数为线程池结构体的指针，首先要从传入的线程池结构体指针中或者当前线程池参数，如果线程池当前的任务队列为空，该线程就会调用<code>pthread_cond_wait</code>函数阻塞等待。直到有任务被加入到任务队列，就会唤醒等待着的线程来执行任务。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">static</span> <span class="kt">void</span> <span class="o">*</span><span class="nf">threadpool_thread</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">threadpool</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">threadpool_t</span> <span class="o">*</span><span class="n">pool</span><span class="o">=</span><span class="p">(</span><span class="n">threadpool_t</span> <span class="o">*</span><span class="p">)</span><span class="n">threadpool</span><span class="p">;</span>
+    <span class="n">threadpool_task_t</span> <span class="n">task</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+        <span class="n">pthread_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">));</span>
+        <span class="k">while</span><span class="p">((</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="o">&amp;&amp;</span><span class="p">(</span><span class="o">!</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">shutdown</span><span class="p">)){</span>
+            <span class="n">pthread_cond_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">cond</span><span class="p">),</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="k">if</span><span class="p">((</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">shutdown</span><span class="o">==</span><span class="n">immediate_shutdown</span><span class="p">)</span><span class="o">||</span><span class="p">((</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">shutdown</span><span class="o">==</span><span class="n">grace_shutdown</span><span class="p">)</span><span class="o">&amp;&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">==</span><span class="mi">0</span><span class="p">)))</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="n">task</span><span class="p">.</span><span class="n">function</span><span class="o">=</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">queue</span><span class="p">[</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">head</span><span class="p">].</span><span class="n">function</span><span class="p">;</span>
+        <span class="n">task</span><span class="p">.</span><span class="n">arg</span><span class="o">=</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">queue</span><span class="p">[</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">head</span><span class="p">].</span><span class="n">arg</span><span class="p">;</span>
+
+        <span class="n">pool</span><span class="o">-&gt;</span><span class="n">head</span><span class="o">=</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">head</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">queue_size</span><span class="p">;</span>
+        <span class="n">pool</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">--</span><span class="p">;</span>
+       
+        <span class="n">pthread_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">));</span>
+        
+        <span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">task</span><span class="p">.</span><span class="n">function</span><span class="p">))(</span><span class="n">task</span><span class="p">.</span><span class="n">arg</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">pool</span><span class="o">-&gt;</span><span class="n">started</span><span class="o">--</span><span class="p">;</span>
+    <span class="n">pthread_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">));</span>
+    <span class="n">pthread_exit</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>向线程池中添加任务</li>
+</ol>
+<p>向线程池添加任务将会改变线程池结构体中的值，在多线程环境下为了保证每次对线程池结构体修改的结果是有效的，必须要加上互斥锁，防止多个线程同时访问造成混乱。在添加完任务后，通过线程池中的条件变量来通知线程可以获取任务执行。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="nf">threadpool_add</span><span class="p">(</span><span class="n">threadpool_t</span> <span class="o">*</span><span class="n">pool</span><span class="p">,</span><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">func</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="p">),</span><span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">err</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">next</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pool</span><span class="o">==</span><span class="nb">NULL</span><span class="o">||</span><span class="n">func</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">threadpool_invalid</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">((</span><span class="n">pthread_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">))</span><span class="o">!=</span><span class="mi">0</span><span class="p">)){</span>
+        <span class="k">return</span> <span class="n">threadpool_lock_failure</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">//数组实现环形队列
+</span><span class="c1"></span>    <span class="n">next</span><span class="o">=</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">tail</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">queue_size</span><span class="p">;</span>
+    
+    <span class="k">do</span><span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">==</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">queue_size</span><span class="p">){</span>
+            <span class="n">err</span><span class="o">=</span><span class="n">threadpool_queue_full</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">shutdown</span><span class="p">){</span>
+            <span class="n">err</span><span class="o">=</span><span class="n">threadpool_shutdown</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">pool</span><span class="o">-&gt;</span><span class="n">queue</span><span class="p">[</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">tail</span><span class="p">].</span><span class="n">function</span><span class="o">=</span><span class="n">func</span><span class="p">;</span>
+        <span class="n">pool</span><span class="o">-&gt;</span><span class="n">queue</span><span class="p">[</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">tail</span><span class="p">].</span><span class="n">arg</span><span class="o">=</span><span class="n">arg</span><span class="p">;</span>
+        <span class="n">pool</span><span class="o">-&gt;</span><span class="n">tail</span><span class="o">=</span><span class="n">next</span><span class="p">;</span>
+        <span class="n">pool</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">++</span><span class="p">;</span>
+        <span class="c1">//添加完任务后，通知阻塞的线程可以从任务队列中取得任务来执行        
+</span><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="n">pthread_cond_signal</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">cond</span><span class="p">))</span><span class="o">!=</span><span class="mi">0</span><span class="p">){</span>
+            <span class="n">err</span><span class="o">=</span><span class="n">threadpool_lock_failure</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span><span class="k">while</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pthread_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">))</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">err</span><span class="o">=</span><span class="n">threadpool_lock_failure</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>销毁线程池
+主线程会对所有阻塞着的线程发出信号，唤醒所有阻塞的线程，再调用<code>pthread_join</code>函数回收所有开启的线程。线程被回收后调用<code>ThreadPool_free</code>函数释放初始化时申请的内存、互斥量和条件变量。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="nf">threadpool_destroy</span><span class="p">(</span><span class="n">threadpool_t</span> <span class="o">*</span><span class="n">pool</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">err</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pool</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">threadpool_invalid</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pthread_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">))</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">threadpool_lock_failure</span><span class="p">;</span>
+    <span class="k">do</span><span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">shutdown</span><span class="p">){</span>
+            <span class="n">err</span><span class="o">=</span><span class="n">threadpool_shutdown</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">pool</span><span class="o">-&gt;</span><span class="n">shutdown</span><span class="o">=</span><span class="p">(</span><span class="n">grace_shutdown</span><span class="p">)</span><span class="o">?</span><span class="nl">grace_shutdown</span><span class="p">:</span><span class="n">immediate_shutdown</span><span class="p">;</span>
+        
+        <span class="k">if</span><span class="p">((</span><span class="n">pthread_cond_broadcast</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">cond</span><span class="p">))</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span><span class="o">||</span><span class="p">(</span><span class="n">pthread_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">))</span><span class="o">!=</span><span class="mi">0</span><span class="p">)){</span>
+            <span class="n">err</span><span class="o">=</span><span class="n">threadpool_lock_failure</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">thread_count</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">pthread_join</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">threads</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="nb">NULL</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">err</span><span class="o">=</span><span class="n">threadpool_thread_failure</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span><span class="k">while</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">err</span><span class="p">)</span>
+        <span class="n">threadpool_free</span><span class="p">(</span><span class="n">pool</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">threadpool_free</span><span class="p">(</span><span class="n">threadpool_t</span> <span class="o">*</span><span class="n">pool</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pool</span><span class="o">==</span><span class="nb">NULL</span><span class="o">||</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">started</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">threads</span><span class="p">){</span>
+        <span class="n">free</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">threads</span><span class="p">);</span>
+        <span class="n">free</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">queue</span><span class="p">);</span>
+        <span class="n">pthread_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">));</span>
+        <span class="n">pthread_mutex_destroy</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">));</span>
+        <span class="n">pthread_cond_destroy</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">pool</span><span class="o">-&gt;</span><span class="n">cond</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">pool</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="总结">总结</h1>
+<p>线程池实现思路：</p>
+<ul>
+<li>首先初始化线程池，得到空的任务队列。创建出很多个线程阻塞等待任务到来。</li>
+<li>线程执行函数中存在<code>while(1)</code>循环，当有任务被添加到线程池时线程唤醒，否则阻塞等待。</li>
+<li>添加任务时调用<code>pthread_cond_signal</code>函数，唤醒某个阻塞的线程，来执行添加进去的任务</li>
+<li>销毁线程池时，以调用<code>pthread_cond_broadcast</code>函数唤醒所有线程，然后回收线程资源，释放线程池申请的动态内存。</li>
+</ul>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li><a href="https://github.com/mbrossard/threadpool">A simple C Thread pool implementation</a></li>
+</ul>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">louis_tian</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-05-22
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">线程池</a>
+          <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/">多线程编程</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/%E9%94%81%E4%B8%8E%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F/">
+            <span class="next-text nav-default">锁与条件变量</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="weiguo.ty@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/louis-tiany" class="iconfont icon-github" title="github"></a>
+  <a href="https://louis-tiany.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">louis_tian</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

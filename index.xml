@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>C_threadpool</title>
+      <link>https://louis-tiany.github.io/post/c_threadpool/</link>
+      <pubDate>Fri, 22 May 2020 20:32:39 +0800</pubDate>
+      
+      <guid>https://louis-tiany.github.io/post/c_threadpool/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>锁与条件变量</title>
       <link>https://louis-tiany.github.io/post/%E9%94%81%E4%B8%8E%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F/</link>
       <pubDate>Tue, 12 May 2020 20:43:44 +0800</pubDate>

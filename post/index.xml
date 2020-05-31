@@ -6,10 +6,19 @@
     <description>Recent content in Posts on louis&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 12 May 2020 20:43:44 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2020 20:32:39 +0800</lastBuildDate>
     
 	<atom:link href="https://louis-tiany.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>C_threadpool</title>
+      <link>https://louis-tiany.github.io/post/c_threadpool/</link>
+      <pubDate>Fri, 22 May 2020 20:32:39 +0800</pubDate>
+      
+      <guid>https://louis-tiany.github.io/post/c_threadpool/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>锁与条件变量</title>
