@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vim on louis&#39;s blog</title>
+    <link>https://louis-tiany.github.io/tags/vim/</link>
+    <description>Recent content in Vim on louis&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 29 Aug 2020 23:36:50 +0800</lastBuildDate>
+    
+	<atom:link href="https://louis-tiany.github.io/tags/vim/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Vim_config</title>
+      <link>https://louis-tiany.github.io/post/vim_config/</link>
+      <pubDate>Sat, 29 Aug 2020 23:36:50 +0800</pubDate>
+      
+      <guid>https://louis-tiany.github.io/post/vim_config/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

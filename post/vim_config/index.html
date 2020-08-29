@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Vim_config - louis&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="louis_tian" /><meta name="description" content="Vim配置" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.65.2 with theme even" />
+
+
+<link rel="canonical" href="https://louis-tiany.github.io/post/vim_config/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+<meta property="og:title" content="Vim_config" />
+<meta property="og:description" content="Vim配置" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://louis-tiany.github.io/post/vim_config/" />
+<meta property="article:published_time" content="2020-08-29T23:36:50+08:00" />
+<meta property="article:modified_time" content="2020-08-29T23:36:50+08:00" />
+<meta itemprop="name" content="Vim_config">
+<meta itemprop="description" content="Vim配置">
+<meta itemprop="datePublished" content="2020-08-29T23:36:50&#43;08:00" />
+<meta itemprop="dateModified" content="2020-08-29T23:36:50&#43;08:00" />
+<meta itemprop="wordCount" content="1580">
+
+
+
+<meta itemprop="keywords" content="Vim," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vim_config"/>
+<meta name="twitter:description" content="Vim配置"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">BBBlog~~~</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">BBBlog~~~</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Vim_config</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-08-29 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> Linux </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#最新版本vim安装">最新版本Vim安装</a></li>
+    <li><a href="#载入配置文件">载入配置文件</a></li>
+    <li><a href="#插件配置">插件配置</a>
+      <ul>
+        <li><a href="#vistavim">vista.vim</a></li>
+        <li><a href="#vim-go">vim-go</a></li>
+        <li><a href="#coc-nvim">coc-nvim</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="vim安装及配置">Vim安装及配置</h1>
+<p>Vim是一个比较“古老的”编辑器。在日新月异的计算机世界中，<code>Vim</code>可以经久不衰，受到大家的喜爱。可见<code>Vim</code>强大的功能和魅力。</p>
+<p>不过<code>Vim</code>的学习确实需要下一番功夫。在折腾了一大圈插件和配置后，发现平时用的最多的其实也就那几个插件。没有必要去一直安装很多用不到的插件。但是基本的美化啥的还是可以继续折腾，毕竟颜值就是生产力=-=，哈哈哈。。。</p>
+<p>感觉<code>Vim</code>比较先进的其实是它的编辑模式的切换，再加上插件的辅助，在编辑文本时的效率提升巨大。</p>
+<p>以下纪录了几个插件的安装过程,方便之后配置<code>Vim</code>（之后会一直更新）:</p>
+<h2 id="最新版本vim安装">最新版本Vim安装</h2>
+<p>Ubuntu20.04更换阿里源之后，使用 <code>apt</code> 安装的<code>Vim</code>并不是最新的，好像是<code>Vim 8.1</code>&hellip;? 为了使用上最新版本的Vim，享受到新的特性，添加<code>apt</code>的PPA源，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">sudo add-apt-repository ppa:jonathonf/vim
+</code></pre></td></tr></table>
+</div>
+</div><p>添加源后，执行<code>sudo apt update &amp;&amp; sudo apt install vim </code>就可以升级到最新版本的<code>Vim</code></p>
+<h2 id="载入配置文件">载入配置文件</h2>
+<p>我的配置文件在<a href="https://github.com/Louis-tiany/.config">这里</a></p>
+<p><code>git clone</code> 仓库之后，将<code>.vimrc</code>文件放到自己的家目录下。这时候<code>Vim</code>的一些快捷键映射就可以生效了，但是还有很多插件没有安装。为了方便的安装插件，需要安装一个插件管理器，这里我用的是<a href="https://github.com/junegunn/vim-plug"><code>Vim-Plug</code></a>，在<code>Terminal</code>中执行一下命令可以安装该插件管理器：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">curl -fLo ~/.vim/autoload/plug.vim --create-dirs <span class="se">\
+</span><span class="se"></span>    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+</code></pre></td></tr></table>
+</div>
+</div><p>打开<code>vim</code>后，输入<code>PlugInstall</code>就可以安装所有插件。</p>
+<h2 id="插件配置">插件配置</h2>
+<p>大部分插件都是通过插件管理器安装后就可以使用的，但是自动补全插件、<code>vim-go</code>还需要安装相应的软件才可以使用。</p>
+<h3 id="vistavim">vista.vim</h3>
+<p>该插件可以显示函数列表，平时用到的也比较多，它需要先安装一个<code>ctas</code>才能正常使用。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">sudo apt install ctags
+</code></pre></td></tr></table>
+</div>
+</div><p>安装完<code>ctags</code>后，打开<code>vim</code>，在<code>normal</code>模式下使用快捷键<code>tl</code>就可以查看函数列表和变量定义。</p>
+<h3 id="vim-go">vim-go</h3>
+<p><code>golang</code>如今是非常火热，给<code>Vim</code>配置了一下<code>golang</code>的开发环境。
+在终端执行：
+<code>sudo apt install golang</code>
+就安装了<code>golang</code>的开发环境。由于之后会安装很多<code>golang</code>的包，但是连接国外的服务器很多时候比较卡或者根本连不上，所以需要为<code>go</code>添加国内代理，并且开启<code>GO11MODULE</code>，只需要将以下两行写入<code>.zshrc</code>或者<code>.bashrc</code>，然后<code>source ~/zshrc</code>或者<code>source ~/.bashrc</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">export GO111MODULE=on
+export GOPROXY=https://goproxy.io 
+</code></pre></td></tr></table>
+</div>
+</div><p>然后在<code>Vim</code>中，输入<code>:GoInstallBinaries</code>就可以安装<code>go</code>补全、格式化等一系列依赖软件。</p>
+<h3 id="coc-nvim">coc-nvim</h3>
+<p><a href="https://github.com/neoclide/coc.nvim"><code>coc-nvim</code></a>是一个功能强大的补全插件，它可以通过安装拓展的方式实现给不同的语言提供自动补全（感谢微软的LSP）。<code>coc.nvim</code>需要<code>node.js</code>，在命令行通过<code>apt</code>安装即可。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">sudo apt install nodejs
+</code></pre></td></tr></table>
+</div>
+</div><p>这时，打开<code>Vim</code>，<code>coc</code>已经可以自动安装相应的拓展。当使用<code>Vim</code>编辑不同的文件时，会自动启动相应的语言服务器提供自动补全服务。</p>
+<ul>
+<li>coc-cland
+<code>C</code>和<code>C++</code>还需要额外安装<a href="https://clangd.llvm.org/installation.html">clangd</a>`,执行以下命令即可安装。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">sudo apt-get install clangd-9
+sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-9 100
+</code></pre></td></tr></table>
+</div>
+</div><p>安装完成后，自动补全就已经很好用了。</p>
+<ul>
+<li>coc-go
+<code>coc-go</code>主要需要<code>go</code>的语言补全服务软件<code>gopls</code>,在安装<code>vim-go</code>的依赖时，应该已经下载过这个软件了。因此只需要在<code>coc</code>的配置文件中设置一下<code>gopls</code>的位置就行。如果以上安装过程都是默认路径的话，<code>gopls</code>的路径应该在<code>~/go/bin</code>目录下。
+所以只需要在<code>coc-settings.json</code>文件中设置一下路径就可以了。或者直接将之前克隆下来的文件中，将<code>coc-settings.json</code>文件拷贝到<code>~/.vim/</code>目录下就可以自动生效。此外，<code>coc</code>还有很多个性化配置都可以在这个配置文件中去设置。</li>
+</ul>
+<p>到这里，<code>Vim</code>已经配置的比较好用了，这里仅仅是列出配置的一些主要步骤，有更多详细的内容比如快捷键、还有各种插件的使用方法都需要在<code>.vimrc</code>配置文件中去配置。这些都需要自己在使用过程中慢慢去熟悉，我的配置文件也许我喜欢的，但不一定适合所有人。
+可以根据个人的习惯去配置编辑器，让它变得越来越顺手，这应该就是<code>Vim</code>的魅力所在吧。</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">louis_tian</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-08-29
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vim/">Vim</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/c_threadpool/">
+            <span class="next-text nav-default">C_threadpool</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="weiguo.ty@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/louis-tiany" class="iconfont icon-github" title="github"></a>
+  <a href="https://louis-tiany.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">louis_tian</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

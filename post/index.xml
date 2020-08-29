@@ -6,10 +6,19 @@
     <description>Recent content in Posts on louis&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 22 May 2020 20:32:39 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 29 Aug 2020 23:36:50 +0800</lastBuildDate>
     
 	<atom:link href="https://louis-tiany.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Vim_config</title>
+      <link>https://louis-tiany.github.io/post/vim_config/</link>
+      <pubDate>Sat, 29 Aug 2020 23:36:50 +0800</pubDate>
+      
+      <guid>https://louis-tiany.github.io/post/vim_config/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>C_threadpool</title>
@@ -80,7 +89,7 @@
       <pubDate>Sat, 22 Feb 2020 17:54:04 +0800</pubDate>
       
       <guid>https://louis-tiany.github.io/post/first-post/</guid>
-      <description>很久之前就有现过搭建自己的博客，但是总是怕写作水平、技术太差而迟迟没有行动起来。在寒假看到了很多搭建博客的视频，又有些心动。 因为自己在生活中</description>
+      <description>很久之前就有现过搭建自己的博客，但是总是怕写作水平、技术太差而迟迟没有行动起来。在寒假看到了很多搭建博客的视频，又有些心动，想了一下，啥好呀</description>
     </item>
     
   </channel>
